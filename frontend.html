@@ -113,7 +113,7 @@ USD/UAH <input id="usd_uah" value="42" size="4">
 <footer>database.json · API 127.0.0.1:8001</footer>
 
 <script>
-const API='http://127.0.0.1:8001';
+const API = window.location.origin;
 const iso=d=>d.toISOString().slice(0,10);
 const round=v=>Math.round((v+1e-9)*100)/100;
 
