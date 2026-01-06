@@ -1,0 +1,30 @@
+INFO:     Started server process [87115]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+INFO:     127.0.0.1:51410 - "GET /stats/user?user_id=7492807312&last_n=3&reminders=2&days=5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51412 - "GET /stats/user?user_id=7492807312&last_n=3&reminders=2&days=5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51424 - "GET /stats/user?user_id=7492807312&last_n=3&reminders=2&days=5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51434 - "GET /stats/user?user_id=7693749432 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /frontend.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /stats/day?day=2026-01-06 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52573 - "GET /stats/range?start=2025-12-31&end=2026-01-06 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /stats/top?n=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52573 - "GET /stats/info HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /stats/total HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52577 - "GET /stats/user?user_id=7693749432&last_n=49&reminders=1&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52577 - "GET /stats/user?user_id=7492807312&last_n=49&reminders=1&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52577 - "GET /stats/user?user_id=1191396648&last_n=49&reminders=1&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52577 - "GET /stats/user?user_id=1871550070&last_n=49&reminders=1&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52577 - "GET /stats/user?user_id=7831004450&last_n=49&reminders=1&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52577 - "GET /stats/user?user_id=946257795&last_n=49&reminders=1&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52577 - "GET /stats/user?user_id=7492807312&last_n=49&reminders=1&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52577 - "GET /stats/user?user_id=7693749432&last_n=49&reminders=1&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52577 - "GET /stats/user?user_id=7492807312&last_n=49&reminders=1&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52577 - "GET /stats/user?user_id=7693749432&last_n=49&reminders=1&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52588 - "GET /stats/user?user_id=7693749432&last_n=49&reminders=1&days=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53420 - "GET /frontend.html HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53420 - "GET /stats/day?day=2026-01-06 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53422 - "GET /stats/range?start=2025-12-31&end=2026-01-06 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53426 - "GET /stats/range?start=2025-12-31&end=2026-01-06 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53426 - "GET /stats/day?day=2026-01-06 HTTP/1.1" 200 OK

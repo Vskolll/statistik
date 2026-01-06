@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Статистика аренды</title>
+
+<style>
+:root {
+  --bg:#f6f7fb;--card:#fff;--text:#1f2937;--muted:#6b7280;
+  --border:#e5e7eb;--accent:#2563eb;--accent-soft:#eff6ff;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+body{margin:0;padding:24px;font-family:system-ui;background:var(--bg);color:var(--text)}
+h1,h3{margin:0 0 12px} h3{margin-top:32px}
+.small{font-size:.85em;color:var(--muted)}
+
+.controls{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:16px;margin-bottom:20px;
+  display:flex;flex-wrap:wrap;gap:12px;align-items:center
+}
+input,button{
+  padding:8px 10px;border-radius:10px;
+  border:1px solid var(--border);font-size:.95em
+}
+button{background:var(--accent);color:#fff;border:none;cursor:pointer}
+
+.totals{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:16px;margin-bottom:16px
+}
+.card{background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:16px}
+.card .value{font-size:1.4em;font-weight:600}
+
+.top-row{display:flex;gap:12px;overflow-x:auto}
+.user{min-width:220px;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:12px}
+
+table{width:100%;border-collapse:collapse;background:var(--card);
+  border-radius:var(--radius);border:1px solid var(--border)}
+thead{background:var(--accent-soft)}
+th,td{padding:10px 12px;border-bottom:1px solid var(--border)}
+
+.day-reminders-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:12px
+}
+.reminder-card{
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:12px;background:var(--card)
+}
+.reminder-bar{
+  height:6px;background:var(--accent-soft);
+  border-radius:4px;overflow:hidden;margin-top:6px
+}
+.reminder-bar span{display:block;height:100%;background:var(--accent)}
+
+footer{margin-top:40px;font-size:.8em;color:var(--muted);text-align:center}
+</style>
+</head>
+
+<body>
+
+<h1>📊 Статистика аренды</h1>
+
+<div class="controls">
+Дата <input type="date" id="date">
+От <input type="date" id="range_start">
+До <input type="date" id="range_end">
+USD/RUB <input id="usd_rub" value="80" size="4">
+USD/UAH <input id="usd_uah" value="42" size="4">
+<button id="refresh">Обновить</button>
+<button id="range_btn">Отчет по дням</button>
+</div>
+
+<div class="totals">
+<div class="card"><div class="small">RUB</div><div id="total_rub" class="value">0 ₽</div></div>
+<div class="card"><div class="small">UAH</div><div id="total_uah" class="value">0 ₴</div></div>
+<div class="card"><div class="small">≈ USD</div><div id="total_usd" class="value">0 $</div></div>
+</div>
+
+<div id="overall" class="small"></div>
+
+<h3>🏆 Топ пользователей</h3>
+<div class="top-row" id="top_row"></div>
+
+<h3>🔔 Кому напомнить на день</h3>
+<div class="card">
+<div style="margin-bottom:12px">
+Дата <input type="date" id="remind_date">
+Напоминаний <input id="remind_per_day" type="number" value="1" min="1" max="5">
+Последних N <input id="remind_last_n" type="number" value="50">
+Сон с <input id="remind_sleep_start" type="number" value="0" min="0" max="23">
+до <input id="remind_sleep_end" type="number" value="6" min="0" max="23">
+<button id="day_reminders_btn">Показать</button>
+</div>
+<div id="day_reminders" class="day-reminders-grid"></div>
+</div>
+
+<h3>📅 Отчет по дням</h3>
+<table>
+<thead><tr><th>Дата</th><th>RUB</th><th>UAH</th><th>≈ USD</th></tr></thead>
+<tbody id="range_body"></tbody>
+</table>
+
+<h3>💰 Зарплата</h3>
+<button id="salary_btn">Рассчитать</button>
+<div id="salary_result" class="small"></div>
+
+<footer>database.json · API 127.0.0.1:8001</footer>
+
+<script>
+const API='http://127.0.0.1:8001';
+const iso=d=>d.toISOString().slice(0,10);
+const round=v=>Math.round((v+1e-9)*100)/100;
+
+async function render(){
+const day=date.value||iso(new Date());
+const usdRub=+usd_rub.value||80,usdUah=+usd_uah.value||42;
+
+const t=await fetch(`${API}/stats/day?day=${day}`).then(r=>r.json());
+total_rub.textContent=round(t.totals.rub)+' ₽';
+total_uah.textContent=round(t.totals.uah)+' ₴';
+total_usd.textContent=round(t.totals.rub/usdRub+t.totals.uah/usdUah)+' $';
+
+const top=await fetch(`${API}/stats/top?n=20`).then(r=>r.json());
+top_row.innerHTML='';
+for(const u of top.top){
+const d=document.createElement('div');d.className='user';
+d.innerHTML=`<strong>${u.user}</strong>
+<div class="small">${u.total_rub_raw} ₽ + ${u.total_uah_raw} ₴</div>
+<div class="small">Операций: ${u.count}</div>`;
+top_row.appendChild(d);
+}
+}
+
+async function renderRange(){
+const s=range_start.value,e=range_end.value||s;
+if(!s)return;
+const usdRub=+usd_rub.value||80,usdUah=+usd_uah.value||42;
+const j=await fetch(`${API}/stats/range?start=${s}&end=${e}`).then(r=>r.json());
+range_body.innerHTML='';
+for(const k of Object.keys(j.by_day||{}).sort()){
+const d=j.by_day[k];
+range_body.innerHTML+=`<tr><td>${k}</td><td>${d.rub} ₽</td><td>${d.uah} ₴</td><td>${round(d.rub/usdRub+d.uah/usdUah)} $</td></tr>`;
+}
+}
+
+async function renderSalary(){
+const s=range_start.value,e=range_end.value||s;
+if(!s)return;
+const j=await fetch(`${API}/stats/extremes?start=${s}&end=${e}`).then(r=>r.json());
+if(!j.best){salary_result.textContent='Нет данных';return}
+salary_result.innerHTML=
+`Лучший: ${j.best.date} ≈ ${j.best.usd} $<br>
+Худший: ${j.worst.date} ≈ ${j.worst.usd} $`;
+}
+
+async function loadDayReminders(){
+const q=`day=${remind_date.value}&last_n=${remind_last_n.value}&reminders=${remind_per_day.value}&sleep_start=${remind_sleep_start.value}&sleep_end=${remind_sleep_end.value}`;
+const j=await fetch(`${API}/stats/reminders?${q}`).then(r=>r.json());
+day_reminders.innerHTML='';
+if(!j.result?.length){day_reminders.innerHTML='<div class="small">Нет напоминаний</div>';return}
+const max=Math.max(...j.result.map(u=>u.reminders.length),1);
+for(const u of j.result){
+const c=u.reminders.length;
+day_reminders.innerHTML+=`
+<div class="reminder-card">
+<strong>${u.user||'без username'}</strong>
+<div class="small">${u.reminders.map(r=>r.time).join(', ')}</div>
+<div class="reminder-bar"><span style="width:${c/max*100}%"></span></div>
+</div>`;
+}
+}
+
+refresh.onclick=render;
+range_btn.onclick=renderRange;
+salary_btn.onclick=renderSalary;
+day_reminders_btn.onclick=loadDayReminders;
+
+date.value=iso(new Date());
+range_start.value=iso(new Date(Date.now()-6*86400000));
+range_end.value=iso(new Date());
+remind_date.value=iso(new Date());
+
+render();renderRange();
+</script>
+</body>
+</html>
