@@ -166,5 +166,83 @@
     "datetime": "2026-01-06 15:11",
     "message_id": 13,
     "source": "statisti414141"
+  },
+  {
+    "user": "asgorpin",
+    "user_id": 1599849566,
+    "account": "004",
+    "duration": "3",
+    "until": "занят до 22:23",
+    "method": "payukraine",
+    "amount": 190,
+    "currency": "UAH",
+    "datetime": "2026-01-06 17:23",
+    "message_id": 14,
+    "source": "statisti414141"
+  },
+  {
+    "user": "zaspad",
+    "user_id": 8589642615,
+    "account": "005",
+    "duration": "1",
+    "until": "занят до 20:24",
+    "method": "paycrypto",
+    "amount": 84,
+    "currency": "UAH",
+    "datetime": "2026-01-06 17:24",
+    "message_id": 15,
+    "source": "statisti414141"
+  },
+  {
+    "user": "vckollarenda",
+    "user_id": 7492807312,
+    "account": "004",
+    "duration": "night",
+    "until": "занят до 10:00",
+    "method": "payrussia",
+    "amount": 1050,
+    "currency": "RUB",
+    "datetime": "2026-01-06 20:46",
+    "message_id": 16,
+    "source": "statisti414141"
+  },
+  {
+    "user": "vckollarenda",
+    "user_id": 7492807312,
+    "account": "006",
+    "duration": "night",
+    "until": "занят до 10:00",
+    "method": "payrussia",
+    "amount": 550,
+    "currency": "RUB",
+    "datetime": "2026-01-06 20:47",
+    "message_id": 17,
+    "source": "statisti414141"
+  },
+  {
+    "user": "vckollarenda",
+    "user_id": 7492807312,
+    "account": "005",
+    "duration": "6",
+    "until": "занят до 04:48",
+    "method": "payrussia",
+    "amount": 460,
+    "currency": "RUB",
+    "datetime": "2026-01-06 20:48",
+    "message_id": 18,
+    "source": "statisti414141"
+  },
+  {
+    "user": "vckollarenda",
+    "user_id": 7492807312,
+    "account": "001",
+    "duration": "12",
+    "until": "занят до 10:50",
+    "method": "payukraine",
+    "amount": 490,
+    "currency": "UAH",
+    "datetime": "2026-01-06 20:50",
+    "message_id": 19,
+    "source": "statisti414141"
   }
 ]
