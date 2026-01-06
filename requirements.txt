@@ -1,2 +1,5 @@
+fastapi
+uvicorn
+
 telethon
 python-telegram-bot==20.3
